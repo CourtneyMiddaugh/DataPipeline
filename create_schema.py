@@ -10,6 +10,18 @@ conn = psycopg.connect(
 )
 
 cur = conn.cursor()
+# creating schema for table which will decode control variable
+cur.execute('''CREATE TABLE control(
+CODE INTEGER PRIMARY KEY,
+CONTROL TEXT               
+);''')
+
+control_vars = [(1, "Public"), (2, "Private non-profit"),
+                (3, "Private for-profit")]
+# adding values to control table to decode control variable
+for control_type in control_vars:
+    cur.execute("INSERT INTO control VALUES (%s, %s);", control_type)
+
 
 # creates table schema of universities' financial information
 cur.execute('''CREATE TABLE finances(
@@ -51,7 +63,7 @@ PRIMARY KEY (UNITID, year_data)
 cur.execute('''CREATE TABLE fast_facts(
 UNITID INTEGER,
 year_data INTEGER,
-CONTROL INTEGER CHECK(CONTROL >= 0),
+CONTROL INTEGER REFERENCES control (CODE),
 CCBASIC INTEGER CHECK(CCBASIC >= 0),
 ADM_RATE FLOAT CHECK(ADM_RATE >= 0),
 STUFACR FLOAT CHECK(STUFACR >= 0),
@@ -81,4 +93,6 @@ cur.execute('''CREATE TABLE location(
     CSA INTEGER,
     FIPS INTEGER CHECK(LENGTH(CAST(FIPS AS VARCHAR(50))) =5)
 );''')
+
+
 conn.commit()
