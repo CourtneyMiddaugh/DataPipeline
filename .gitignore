@@ -1,2 +1,3 @@
 # ignore the credentials file which will contain the username and password
 credentials.py
+drop_tables.py
