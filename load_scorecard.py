@@ -8,8 +8,7 @@ from credentials import DB_NAME, DB_USER, DB_PASSWORD
 import pandas as pd
 import sys
 import numpy as np
-import warnings
-warnings.filterwarnings('ignore')
+
 with open("invalid_college_scorecard.csv", "w", encoding="utf-8") as f:
     FILE = sys.argv[1]
     YEAR = sys.argv[2]
