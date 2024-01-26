@@ -29,14 +29,18 @@ with open("invalid_ipeds.csv", "w", encoding="utf-8") as f:
 
     cur = conn.cursor()
 
+    locations = pd.read_sql_query("SELECT UNITID FROM location", conn)
+
     with conn.transaction():
 
         for ind in data.index:
             try:
+                id = data['UNITID'][ind]
+                if locations.unitid.isin([id]).any():
+                    continue
                 with conn.transaction():
                     # data for location table
                     print(num_rows_inserted)
-                    id = data['UNITID'][ind]
                     name = data['INSTNM'][ind]
                     addr = data['ADDR'][ind]
                     city = data['CITY'][ind]

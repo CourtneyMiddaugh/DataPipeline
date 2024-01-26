@@ -107,7 +107,7 @@ with open("invalid_college_scorecard.csv", "w", encoding="utf-8") as f:
                     ''', fact_vars)
 
                     # checking to see if location is already in the table
-                    if region not in locations:
+                    if not locations.unitid.isin([id]).any():
                         cur.execute('''INSERT INTO region(
                             UNITID, region)
                             VALUES (%s, %s)
