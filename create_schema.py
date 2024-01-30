@@ -13,7 +13,7 @@ cur = conn.cursor()
 # creating schema for table which will decode control variable
 cur.execute('''CREATE TABLE control(
 CODE INTEGER PRIMARY KEY,
-CONTROL TEXT               
+CONTROL TEXT
 );''')
 
 control_vars = [(1, "Public"), (2, "Private non-profit"),
